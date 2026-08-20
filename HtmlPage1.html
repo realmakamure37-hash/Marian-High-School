@@ -1,0 +1,942 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marian High School | Official Portal</title>
+    <style>
+        :root {
+            --primary-red: #D32F2F;
+            --dark-red: #9A0007;
+            --black: #121212;
+            --white: #FFFFFF;
+            --gray-light: #F8F9FA;
+            --gray-border: #E0E0E0;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--gray-light);
+            color: var(--black);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Navigation */
+        header {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 4px solid var(--primary-red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Upright SVG School Logo Container */
+        .school-logo-svg {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: var(--white);
+            padding: 2px;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-text h1 {
+            font-size: 1.4rem;
+            line-height: 1.1;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text span {
+            font-size: 0.75rem;
+            color: #CCCCCC;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        nav {
+            display: flex;
+            gap: 8px;
+        }
+
+            nav button {
+                background: transparent;
+                color: var(--white);
+                border: 2px solid transparent;
+                padding: 0.6rem 1.2rem;
+                border-radius: 4px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+                nav button:hover, nav button.active {
+                    background-color: var(--primary-red);
+                    border-color: var(--primary-red);
+                    transform: translateY(-2px);
+                }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(18,18,18,0.95) 0%, rgba(154,0,7,0.85) 100%), radial-gradient(circle at center, #222 0%, #000 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 4rem 1.5rem;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+            .hero h2 {
+                font-size: 2.8rem;
+                margin-bottom: 0.4rem;
+                font-weight: 800;
+            }
+
+            .hero .motto-tag {
+                display: inline-block;
+                background: var(--primary-red);
+                color: var(--white);
+                padding: 0.3rem 1rem;
+                border-radius: 20px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                max-width: 650px;
+                margin: 0 auto 1.5rem auto;
+                color: #E0E0E0;
+            }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-red);
+        }
+
+            .stat-box strong {
+                display: block;
+                font-size: 1.5rem;
+                color: var(--white);
+            }
+
+            .stat-box span {
+                font-size: 0.85rem;
+                color: #CCC;
+            }
+
+        /* Main Section Cards */
+        .main-container {
+            max-width: 1100px;
+            margin: 2.5rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .section-card {
+            background: var(--white);
+            border-top: 6px solid var(--black);
+            border-radius: 8px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: slideUp 0.4s ease-out forwards;
+        }
+
+            .section-card.active {
+                display: block;
+            }
+
+            .section-card h3 {
+                font-size: 1.8rem;
+                color: var(--black);
+                margin-bottom: 1.5rem;
+                border-bottom: 2px solid var(--gray-border);
+                padding-bottom: 0.5rem;
+            }
+
+        /* Layouts & Forms */
+        .home-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .announcement-item {
+            background: var(--gray-light);
+            border-left: 4px solid var(--primary-red);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+            .announcement-item time {
+                font-size: 0.8rem;
+                color: var(--primary-red);
+                font-weight: bold;
+            }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 0.4rem;
+                font-weight: 700;
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .form-group input, .form-group select, .form-group textarea {
+                width: 100%;
+                padding: 0.8rem;
+                border: 1px solid var(--gray-border);
+                border-radius: 4px;
+                font-size: 1rem;
+                transition: border 0.3s;
+            }
+
+                .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+                    outline: none;
+                    border-color: var(--primary-red);
+                    box-shadow: 0 0 5px rgba(211, 47, 47, 0.3);
+                }
+
+        /* Social Link Buttons */
+        .social-btn-container {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--gray-border);
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--primary-red);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.8rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+
+            .btn:hover {
+                background-color: var(--dark-red);
+                transform: translateY(-1px);
+            }
+
+        .btn-dark {
+            background-color: var(--black);
+        }
+
+            .btn-dark:hover {
+                background-color: #333;
+            }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background: var(--white);
+        }
+
+            .data-table th, .data-table td {
+                padding: 0.9rem 1rem;
+                border: 1px solid var(--gray-border);
+                text-align: left;
+            }
+
+            .data-table th {
+                background-color: var(--black);
+                color: var(--white);
+                font-size: 0.9rem;
+                text-transform: uppercase;
+            }
+
+            .data-table tr:nth-child(even) {
+                background-color: #FDFDFD;
+            }
+
+            .data-table tr:hover {
+                background-color: #F1F1F1;
+            }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: auto;
+            border-top: 4px solid var(--primary-red);
+            font-size: 0.9rem;
+        }
+
+            footer p {
+                color: #AAA;
+                margin-top: 0.5rem;
+            }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-container">
+            <!-- Embedded Crest SVG Vector -->
+            <div class="school-logo-svg">
+                <svg viewBox="0 0 100 100" width="48" height="48">
+                    <!-- Circular Outer Text Path -->
+                    <path id="textPathTop" d="M 12,50 A 38,38 0 1,1 88,50" fill="none" />
+                    <path id="textPathBottom" d="M 88,50 A 38,38 0 1,1 12,50" fill="none" />
+
+                    <text font-size="7.5" font-weight="bold" fill="#121212" letter-spacing="0.5">
+                        <textPath href="#textPathTop" startOffset="50%" text-anchor="middle">MARIAN HIGH SCHOOL</textPath>
+                    </text>
+                    <text font-size="7" font-weight="bold" fill="#121212" letter-spacing="0.5">
+                        <textPath href="#textPathBottom" startOffset="50%" text-anchor="middle">SEIZE THIS MOMENT</textPath>
+                    </text>
+
+                    <!-- Central Shield Crest -->
+                    <path d="M 32 35 C 32 35, 50 31, 68 35 C 68 55, 62 70, 50 78 C 38 70, 32 55, 32 35 Z" fill="#FFFFFF" stroke="#121212" stroke-width="2.5" stroke-linejoin="round" />
+
+                    <!-- Dove Symbol inside Shield -->
+                    <path d="M 46 54 C 43 51, 42 46, 46 44 C 49 43, 52 46, 56 47 C 60 44, 62 48, 59 52 C 55 54, 49 56, 46 54 Z" fill="#E0E0E0" stroke="#121212" stroke-width="1.2" />
+                    <!-- Wing Detail -->
+                    <path d="M 48 45 C 52 40, 60 41, 63 47 C 58 48, 52 47, 48 45 Z" fill="#FFFFFF" stroke="#121212" stroke-width="1.2" />
+                    <!-- Olive Branch in Beak -->
+                    <path d="M 43 46 Q 37 42 34 40 M 36 43 Q 33 46 31 43 M 38 41 Q 38 38 35 37" fill="none" stroke="#2E7D32" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+            </div>
+
+            <div class="brand-text">
+                <h1>Marian High School</h1>
+                <span>Seize This Moment</span>
+            </div>
+        </div>
+        <nav>
+            <button class="nav-link active" onclick="navigate('home', event)">Home</button>
+            <button class="nav-link" onclick="navigate('academics', event)">Academics</button>
+            <button class="nav-link" onclick="navigate('parents', event)">Parent Portal</button>
+            <button class="nav-link" onclick="navigate('teachers', event)">Teacher Portal</button>
+            <button class="nav-link" onclick="navigate('contact', event)">Contact</button>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <span class="motto-tag">School Motto: Seize This Moment</span>
+        <h2>Welcome to Marian High School</h2>
+        <p>Empowering scholars through rigorous academics, character formation, and technological innovation.</p>
+        <div class="hero-stats">
+            <div class="stat-box">
+                <strong>100%</strong>
+                <span>Graduation Rate</span>
+            </div>
+            <div class="stat-box">
+                <strong>15:1</strong>
+                <span>Student-Teacher Ratio</span>
+            </div>
+            <div class="stat-box">
+                <strong>5.0 Scale</strong>
+                <span>Automated Weighted GPA</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+
+        <!-- HOME SECTION -->
+        <section id="home" class="section-card active">
+            <h3>Campus Announcements & Overview</h3>
+            <div class="home-grid">
+                <div>
+                    <h4>Principal's Welcome</h4>
+                    <p style="margin-top: 0.5rem; line-height: 1.6;">At Marian High School, we encourage every student to <em>"Seize This Moment"</em> by committing to academic mastery and personal growth. Our integrated digital portal ensures seamless communication between faculty, parents, and students.</p>
+
+                    <h4 style="margin-top: 1.5rem;">5-Point Academic Grading Scale</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Score Range</th>
+                                <th>Grade</th>
+                                <th>GPA Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>90.0% – 100%</td><td><strong style="color: var(--primary-red);">A*</strong></td><td>5.0</td></tr>
+                            <tr><td>80.0% – 89.9%</td><td>A</td><td>5.0</td></tr>
+                            <tr><td>70.0% – 79.9%</td><td>B</td><td>4.0</td></tr>
+                            <tr><td>60.0% – 69.9%</td><td>C</td><td>3.0</td></tr>
+                            <tr><td>50.0% – 59.9%</td><td>D</td><td>2.0</td></tr>
+                            <tr><td>40.0% – 49.9%</td><td>E</td><td>1.0</td></tr>
+                            <tr><td>Below 40.0%</td><td>F</td><td>0.0</td></tr>
+                        </tbody>
+                    </table>
+
+                    <!-- CAMPUS PHOTO GALLERY -->
+                    <h4 style="margin-top: 2rem;">Recent Campus Highlights</h4>
+                    <div class="gallery-grid" id="publicGallery">
+                        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400" alt="Campus Event"></div>
+                        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400" alt="Classroom Learning"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Latest Bulletins</h4>
+                    <br>
+                    <div id="bulletinFeed">
+                        <div class="announcement-item">
+                            <time>AUG 25, 2026</time>
+                            <p><strong>Parent-Teacher Association Summit</strong></p>
+                            <p style="font-size: 0.85rem;">Main Auditorium at 5:00 PM.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACADEMICS SECTION -->
+        <section id="academics" class="section-card">
+            <h3>Academic Programs</h3>
+            <p style="line-height: 1.6; margin-bottom: 1.5rem;">Marian High School offers advanced placement coursework, STEM pathways, and humanities programs tailored to university preparation.</p>
+            <div class="form-grid">
+                <div style="background: var(--gray-light); padding: 1.5rem; border-radius: 6px;">
+                    <h4>STEM Division</h4>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Advanced Calculus, Computer Science, Data Structures, University Physics, Chemistry.</p>
+                </div>
+                <div style="background: var(--gray-light); padding: 1.5rem; border-radius: 6px;">
+                    <h4>Humanities</h4>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">World History, Literature & Composition, Economics, Political Science.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARENT PORTAL -->
+        <section id="parents" class="section-card">
+            <h3>Parent Access Portal</h3>
+            <p style="margin-bottom: 1.5rem; color: #555;">To view official transcripts and GPA records, please enter both your child's full name and unique Student Identification Number.</p>
+
+            <div class="form-grid" style="max-width: 500px;">
+                <div class="form-group">
+                    <label for="studentNameInput">Student Full Name:</label>
+                    <input type="text" id="studentNameInput" placeholder="e.g., Alex Mercer">
+                </div>
+                <div class="form-group">
+                    <label for="studentIdInput">Student Identification Number:</label>
+                    <input type="text" id="studentIdInput" placeholder="e.g., STU-98421">
+                </div>
+            </div>
+            <button class="btn" onclick="fetchParentReport()">Access Records</button>
+
+            <!-- Display Social Communication Hub for Parents -->
+            <div style="margin-top: 2rem; background: var(--gray-light); padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--black);">
+                <h4>Classroom & Parent Groups</h4>
+                <p style="font-size: 0.9rem; margin-top: 0.3rem;">Join official class channels managed by classroom instructors:</p>
+                <div class="social-btn-container">
+                    <a id="parentWhatsappBtn" href="#" target="_blank" class="btn-whatsapp" style="display:none;">
+                        Join Class WhatsApp Group
+                    </a>
+                    <a id="parentInstagramBtn" href="#" target="_blank" class="btn-instagram" style="display:none;">
+                        Follow Class Instagram
+                    </a>
+                </div>
+            </div>
+
+            <div id="parentReportContainer" style="margin-top: 2rem; display: none;">
+                <div style="background: var(--gray-light); padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                    <h4 id="reportStudentName">Student: --</h4>
+                    <p id="reportStudentGPA" style="font-weight: bold; color: var(--primary-red); margin-top: 0.3rem;">Cumulative GPA (5.0 Scale): --</p>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Credits</th>
+                            <th>Weighted Score</th>
+                            <th>Grade</th>
+                            <th>GPA Points (Max 5.0)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="parentReportBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- TEACHER PORTAL -->
+        <section id="teachers" class="section-card">
+            <h3>Teacher Management Portal</h3>
+
+            <!-- Authentication Lock -->
+            <div id="teacherAuthBlock">
+                <p id="authNotice" style="margin-bottom: 1rem;">Set up or enter your security credential to unlock grade recording access:</p>
+                <div class="form-group" style="max-width: 350px;">
+                    <label for="teacherPassInput">Access Code / Password:</label>
+                    <input type="password" id="teacherPassInput" placeholder="Enter password">
+                </div>
+                <button class="btn" onclick="verifyTeacherAccess()">Unlock Dashboard</button>
+                <p id="authFeedback" style="color: var(--primary-red); font-weight: bold; margin-top: 0.5rem; display: none;"></p>
+            </div>
+
+            <!-- Management Panel -->
+            <div id="teacherPanel" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h4>Grade & Record Processing Engine</h4>
+                    <button class="btn btn-dark" onclick="teacherLogout()">Lock Portal</button>
+                </div>
+
+                <!-- SECTION 1: GRADE ENTRY -->
+                <div style="border-bottom: 2px solid var(--gray-border); padding-bottom: 1.5rem; margin-bottom: 2rem;">
+                    <h5 style="margin-bottom: 1rem; text-transform: uppercase;">1. Grade Submission</h5>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tStudentId">Student ID:</label>
+                            <input type="text" id="tStudentId" placeholder="STU-98421">
+                        </div>
+                        <div class="form-group">
+                            <label for="tStudentName">Student Name:</label>
+                            <input type="text" id="tStudentName" placeholder="Alex Mercer">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tCourseCode">Course Code:</label>
+                            <input type="text" id="tCourseCode" placeholder="MATH301">
+                        </div>
+                        <div class="form-group">
+                            <label for="tCourseTitle">Course Title:</label>
+                            <input type="text" id="tCourseTitle" placeholder="Advanced Calculus">
+                        </div>
+                        <div class="form-group">
+                            <label for="tCredits">Course Credits:</label>
+                            <input type="number" id="tCredits" placeholder="4">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tScore">Points Scored:</label>
+                            <input type="number" id="tScore" placeholder="91">
+                        </div>
+                        <div class="form-group">
+                            <label for="tMaxScore">Max Score Possible:</label>
+                            <input type="number" id="tMaxScore" placeholder="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="tWeight">Assessment Weight (%):</label>
+                            <input type="number" id="tWeight" placeholder="100">
+                        </div>
+                    </div>
+                    <button class="btn" onclick="submitGradeEntry()">Process and Save Grade Record</button>
+                </div>
+
+                <!-- SECTION 2: CLASS COMMUNICATION & LINKS -->
+                <div style="border-bottom: 2px solid var(--gray-border); padding-bottom: 1.5rem; margin-bottom: 2rem;">
+                    <h5 style="margin-bottom: 1rem; text-transform: uppercase;">2. Class Social Groups (WhatsApp & Instagram)</h5>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tWaLink">WhatsApp Class Group Link:</label>
+                            <input type="url" id="tWaLink" placeholder="https://chat.whatsapp.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label for="tIgLink">Instagram Profile / Group Link:</label>
+                            <input type="url" id="tIgLink" placeholder="https://instagram.com/...">
+                        </div>
+                    </div>
+                    <button class="btn btn-dark" onclick="saveSocialLinks()">Publish Social Links</button>
+                </div>
+
+                <!-- SECTION 3: BULLETIN & PICTURE POSTING -->
+                <div>
+                    <h5 style="margin-bottom: 1rem; text-transform: uppercase;">3. Post Announcements & Photos</h5>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tAnnounceTitle">Announcement Title:</label>
+                            <input type="text" id="tAnnounceTitle" placeholder="Excursion Notice">
+                        </div>
+                        <div class="form-group">
+                            <label for="tAnnounceMsg">Details:</label>
+                            <input type="text" id="tAnnounceMsg" placeholder="Trip scheduled for next Tuesday...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tImgUrl">Picture URL (Image Link):</label>
+                        <input type="url" id="tImgUrl" placeholder="https://images.unsplash.com/...">
+                    </div>
+                    <button class="btn" onclick="postBulletinAndPhoto()">Publish Announcement & Photo</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="section-card">
+            <h3>Contact Administration</h3>
+            <div class="home-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="cName">Your Name:</label>
+                        <input type="text" id="cName" placeholder="Full Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="cEmail">Email Address:</label>
+                        <input type="email" id="cEmail" placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="cMsg">Message:</label>
+                        <input type="text" id="cMsg" placeholder="Inquiry details...">
+                    </div>
+                    <button class="btn" onclick="alert('Thank you. Your inquiry has been dispatched to Administration.')">Submit Inquiry</button>
+                </div>
+
+                <div>
+                    <h4>Campus Address</h4>
+                    <p style="margin-top: 0.5rem; font-size: 0.95rem; line-height: 1.5;">
+                        Marian High School<br>
+                        100 Academic Parkway<br>
+                        Administration Suite A
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        &copy; 2026 Marian High School. All rights reserved.
+        <p><em>"Seize This Moment"</em> — Official School Administration & Portal Platform</p>
+    </footer>
+
+    <script>
+        const database = {
+            "STU-98421": {
+                name: "Alex Mercer",
+                courses: [
+                    { code: "MATH301", title: "Advanced Calculus", credits: 4, score: 91.5 },
+                    { code: "CS102", title: "Data Structures", credits: 3, score: 85.0 },
+                    { code: "PHYS201", title: "University Physics", credits: 4, score: 71.4 }
+                ]
+            }
+        };
+
+        function evaluateGrade(percentage) {
+            if (percentage >= 90.0) return { letter: "A*", points: 5.0 };
+            if (percentage >= 80.0) return { letter: "A", points: 5.0 };
+            if (percentage >= 70.0) return { letter: "B", points: 4.0 };
+            if (percentage >= 60.0) return { letter: "C", points: 3.0 };
+            if (percentage >= 50.0) return { letter: "D", points: 2.0 };
+            if (percentage >= 40.0) return { letter: "E", points: 1.0 };
+            return { letter: "F", points: 0.0 };
+        }
+
+        function calculateGPA(courses) {
+            let totalPoints = 0;
+            let totalCredits = 0;
+            courses.forEach(c => {
+                const info = evaluateGrade(c.score);
+                totalPoints += info.points * c.credits;
+                totalCredits += c.credits;
+            });
+            return totalCredits === 0 ? "0.00" : (totalPoints / totalCredits).toFixed(2);
+        }
+
+        function navigate(sectionId, event) {
+            document.querySelectorAll('.section-card').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(sectionId).classList.add('active');
+            if (event) event.target.classList.add('active');
+        }
+
+        function fetchParentReport() {
+            const inputName = document.getElementById('studentNameInput').value.trim();
+            const inputId = document.getElementById('studentIdInput').value.trim();
+            const container = document.getElementById('parentReportContainer');
+            const tbody = document.getElementById('parentReportBody');
+            const nameEl = document.getElementById('reportStudentName');
+            const gpaEl = document.getElementById('reportStudentGPA');
+
+            if (!inputName || !inputId) {
+                alert('Please enter both the student full name and student ID.');
+                container.style.display = 'none';
+                return;
+            }
+
+            const record = database[inputId];
+
+            if (record && record.name.toLowerCase() === inputName.toLowerCase()) {
+                nameEl.innerText = `Student Record: ${record.name} (${inputId})`;
+                gpaEl.innerText = `Cumulative GPA: ${calculateGPA(record.courses)} / 5.00`;
+
+                tbody.innerHTML = '';
+                record.courses.forEach(c => {
+                    const grade = evaluateGrade(c.score);
+                    tbody.innerHTML += `
+                            <tr>
+                                <td>${c.code}</td>
+                                <td>${c.title}</td>
+                                <td>${c.credits}</td>
+                                <td>${c.score.toFixed(1)}%</td>
+                                <td><strong style="color: var(--primary-red);">${grade.letter}</strong></td>
+                                <td>${grade.points.toFixed(1)}</td>
+                            </tr>
+                        `;
+                });
+                container.style.display = 'block';
+            } else {
+                alert('Verification failed. No matching record found.');
+                container.style.display = 'none';
+            }
+        }
+
+        function verifyTeacherAccess() {
+            const entered = document.getElementById('teacherPassInput').value;
+            const feedback = document.getElementById('authFeedback');
+            const saved = localStorage.getItem('mhs_teacher_pass');
+
+            if (!saved) {
+                if (entered.length < 4) {
+                    feedback.innerText = "Please set a password with at least 4 characters.";
+                    feedback.style.display = 'block';
+                    return;
+                }
+                localStorage.setItem('mhs_teacher_pass', entered);
+                alert('Security password set successfully! Unlocking dashboard...');
+                unlockTeacherPanel();
+            } else {
+                if (entered === saved) {
+                    unlockTeacherPanel();
+                } else {
+                    feedback.innerText = "Invalid security password.";
+                    feedback.style.display = 'block';
+                }
+            }
+        }
+
+        function unlockTeacherPanel() {
+            document.getElementById('teacherAuthBlock').style.display = 'none';
+            document.getElementById('teacherPanel').style.display = 'block';
+            document.getElementById('authFeedback').style.display = 'none';
+        }
+
+        function teacherLogout() {
+            document.getElementById('teacherAuthBlock').style.display = 'block';
+            document.getElementById('teacherPanel').style.display = 'none';
+            document.getElementById('teacherPassInput').value = '';
+        }
+
+        function submitGradeEntry() {
+            const id = document.getElementById('tStudentId').value.trim();
+            const name = document.getElementById('tStudentName').value.trim();
+            const code = document.getElementById('tCourseCode').value.trim();
+            const title = document.getElementById('tCourseTitle').value.trim();
+            const credits = parseInt(document.getElementById('tCredits').value);
+            const score = parseFloat(document.getElementById('tScore').value);
+            const maxScore = parseFloat(document.getElementById('tMaxScore').value);
+            const weight = parseFloat(document.getElementById('tWeight').value);
+
+            if (!id || !code || isNaN(score) || isNaN(maxScore) || isNaN(weight)) {
+                alert('Please fill in all grade parameters accurately.');
+                return;
+            }
+
+            const finalCalculatedScore = (score / maxScore) * weight;
+
+            if (!database[id]) {
+                database[id] = { name: name || "New Student", courses: [] };
+            }
+
+            let existingCourse = database[id].courses.find(c => c.code === code);
+            if (existingCourse) {
+                existingCourse.score = finalCalculatedScore;
+            } else {
+                database[id].courses.push({
+                    code: code,
+                    title: title || code,
+                    credits: credits || 3,
+                    score: finalCalculatedScore
+                });
+            }
+
+            const result = evaluateGrade(finalCalculatedScore);
+            alert(`Assessment processed successfully!\nCalculated Score: ${finalCalculatedScore.toFixed(1)}%\nAssigned Grade: ${result.letter} (${result.points.toFixed(1)} / 5.0 Points)`);
+        }
+
+        function saveSocialLinks() {
+            const wa = document.getElementById('tWaLink').value.trim();
+            const ig = document.getElementById('tIgLink').value.trim();
+
+            if (wa) {
+                localStorage.setItem('mhs_wa_link', wa);
+            }
+            if (ig) {
+                localStorage.setItem('mhs_ig_link', ig);
+            }
+
+            alert('Social Group Links published to Parent Portal successfully!');
+            loadSocialLinks();
+        }
+
+        function loadSocialLinks() {
+            const wa = localStorage.getItem('mhs_wa_link');
+            const ig = localStorage.getItem('mhs_ig_link');
+
+            const waBtn = document.getElementById('parentWhatsappBtn');
+            const igBtn = document.getElementById('parentInstagramBtn');
+
+            if (wa) {
+                waBtn.href = wa;
+                waBtn.style.display = 'inline-flex';
+            }
+            if (ig) {
+                igBtn.href = ig;
+                igBtn.style.display = 'inline-flex';
+            }
+        }
+
+        function postBulletinAndPhoto() {
+            const title = document.getElementById('tAnnounceTitle').value.trim();
+            const msg = document.getElementById('tAnnounceMsg').value.trim();
+            const img = document.getElementById('tImgUrl').value.trim();
+
+            if (title && msg) {
+                const feed = document.getElementById('bulletinFeed');
+                feed.innerHTML = `
+                        <div class="announcement-item">
+                            <time>TODAY</time>
+                            <p><strong>${title}</strong></p>
+                            <p style="font-size: 0.85rem;">${msg}</p>
+                        </div>
+                    ` + feed.innerHTML;
+            }
+
+            if (img) {
+                const gallery = document.getElementById('publicGallery');
+                gallery.innerHTML = `<div class="gallery-item"><img src="${img}" alt="Campus Highlight"></div>` + gallery.innerHTML;
+            }
+
+            alert('Announcement and media uploaded to the homepage site!');
+        }
+
+        window.onload = function () {
+            loadSocialLinks();
+            if (localStorage.getItem('mhs_teacher_pass')) {
+                document.getElementById('authNotice').innerText = "Enter your custom teacher password to unlock management features:";
+            }
+        };
+    </script>
+</body>
+</html>
